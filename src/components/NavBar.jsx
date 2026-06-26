@@ -11,10 +11,8 @@ import { authClient, useSession } from "@/lib/auth-client";
 import Image from "next/image";
 
 export default function Navbar() {
-  const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
-console.log("session:", session);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -32,7 +30,10 @@ console.log("session:", session);
     await authClient.signOut();
     router.push("/");
   };
-
+  const pathname = usePathname();
+  if(pathname.includes("dashboard")){
+    return null;
+  }
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-white/5 bg-slate-950/65 backdrop-blur-md py-3.5 px-6">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -82,7 +83,7 @@ console.log("session:", session);
                 href="/registration"
                 className="inline-flex items-center justify-center font-semibold text-xs bg-gradient-to-r from-pink-500 to-indigo-600 text-white shadow-lg shadow-pink-500/10 hover:shadow-pink-500/20 transition h-9 px-4 rounded-xl"
               >
-                Join as Donor
+                SignUp
               </Link>
             </div>
           )}
@@ -108,7 +109,7 @@ console.log("session:", session);
                   {/* User info */}
                   <div className="px-4 py-2.5 border-b border-white/5 mb-1.5 cursor-default">
                     <p className="text-[10px] text-pink-400 font-bold uppercase tracking-wider">
-                      {session.user.role || "Donor"} Account
+                      {session.user.role} Account
                     </p>
                     <p className="font-bold text-white text-sm mt-0.5">{session.user.name}</p>
                     <p className="text-[11px] text-slate-400 truncate mt-0.5">{session.user.email}</p>
@@ -116,7 +117,7 @@ console.log("session:", session);
 
                   {/* Dashboard / Profile Link */}
                   <Link
-                    href="/dashboard"
+                    href={`/dashboard/${session?.user?.role}`}
                     onClick={() => setDropdownOpen(false)}
                     className="w-full flex items-center gap-2.5 px-4 py-2.5 text-left text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 transition cursor-pointer"
                   >
