@@ -44,13 +44,13 @@ export default function Navbar() {
         <div className="hidden sm:flex items-center gap-8">
           <Link
             href="/"
-            className={`text-sm font-medium transition-colors ${pathname === "/" ? "text-pink-500 font-semibold" : "text-slate-300 hover:text-white"}`}
+className={`text-sm font-medium transition-colors ${pathname === "/" ? "text-pink-500 font-semibold" : "text-slate-300 hover:text-white"}`}
           >
             Home
           </Link>
           <Link
             href="/donation-requests"
-            className={`text-sm font-medium transition-colors ${pathname.startsWith("/donation-requests") ? "text-pink-500 font-semibold" : "text-slate-300 hover:text-white"}`}
+className={`text-sm font-medium transition-colors ${pathname.startsWith("/donation-requests") ? "text-pink-500 font-semibold" : "text-slate-300 hover:text-white"}`}
           >
             Donation Requests
           </Link>

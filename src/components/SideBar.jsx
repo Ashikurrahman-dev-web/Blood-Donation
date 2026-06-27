@@ -23,19 +23,19 @@ const user = session?.user
 const dashboaedItems = {
     "donor": [
         { name: 'Home', icon: <Home className="w-5 h-5" />, href: '/dashboard/donor' }, 
-        { name: 'ProfileSettings', icon: <Settings className="w-5 h-5" />, href: '' }, 
+{ name: 'ProfileSettings', icon: <Settings className="w-5 h-5" />, href: '/dashboard/profile' }, 
 { name: 'My Donation Request', icon: <GitPullRequestCreate className="w-5 h-5" />, href: '/dashboard/mydonationrequest' },
 { name: 'Create Donation Request', icon: <UserRoundPlus className="w-5 h-5" />, href: '/dashboard/createdonationrequest' },
     ],
     "volunteer":[
         { name: 'Home', icon: <Home className="w-5 h-5" />, href: '/dashboard/volunteer' }, 
-        { name: 'ProfileSettings', icon: <Settings className="w-5 h-5" />, href: '' }, 
+{ name: 'ProfileSettings', icon: <Settings className="w-5 h-5" />, href: '/dashboard/profile'}, 
 { name: 'All Blood Donation', icon: <Columns4 className="w-5 h-5" />, href: '/dashboard/allblooddonationvolunteer' }, 
 
     ],
     "admin":[
   { name: 'Home', icon: <Home className="w-5 h-5" />, href: '/dashboard/admin' }, 
-        { name: 'ProfileSettings', icon: <Settings className="w-5 h-5" />, href: '' },
+  { name: 'ProfileSettings', icon: <Settings className="w-5 h-5" />, href: '/dashboard/profile' },
       { name: 'All Users', icon: <UsersRound className="w-5 h-5" />, href: '/dashboard/allusers' }, 
 { name: 'All Blood Donation', icon: <Columns4 className="w-5 h-5" />, href: '/dashboard/allblooddonationadmin'},               
     ]

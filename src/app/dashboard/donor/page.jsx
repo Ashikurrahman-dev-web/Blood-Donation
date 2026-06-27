@@ -60,13 +60,31 @@ useEffect(() => {
     setSelectedRequestId(id);
     setIsModalOpen(true);
   };
+const handleDelete = async () => {
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/donation-request/${selectedRequestId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
-  // রিকোয়েস্ট ডিলিট কনফার্মেশন
-  const handleDelete = () => {
-    setRequests(prev => prev.filter(req => req.id !== selectedRequestId));
+    const data = await res.json();
+
+    if (data.deletedCount > 0) {
+      setRequests((prev) =>
+        prev.filter(
+          (req) => req._id !== selectedRequestId
+        )
+      );
+    }
+
     setIsModalOpen(false);
     setSelectedRequestId(null);
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   // রিকোয়ারমেন্ট অনুযায়ী সর্বোচ্চ ৩টি সাম্প্রতিক রিকোয়েস্ট ফিল্টার
   const recentRequests = requests.slice(0, 3);
@@ -76,7 +94,7 @@ useEffect(() => {
       
       {/* 1. Welcome Section (সেশন থেকে ডাইনামিক নাম শো করবে) */}
       <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl p-6 md:p-8 text-white shadow-lg">
-        <h1 className="text-2xl md:text-4xl font-bold">Welcome Back, {user?.name || 'Donor'}! 👋</h1>
+<h1 className="text-2xl md:text-4xl font-bold">Welcome Back, {user?.name || 'Donor'}! 👋</h1>
         <p className="text-red-100 mt-2 text-sm md:text-base">
           Thank you for being a lifeline. Your active contributions save lives everyday.
         </p>
@@ -95,7 +113,7 @@ useEffect(() => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-gray-50 text-gray-600 text-xs font-semibold uppercase tracking-wider border-b border-gray-100">
+<tr className="bg-gray-50 text-gray-600 text-xs font-semibold uppercase tracking-wider border-b border-gray-100">
                   <th className="p-4">Recipient</th>
                   <th className="p-4">Location</th>
                   <th className="p-4">Date & Time</th>
@@ -133,11 +151,11 @@ useEffect(() => {
                     
                     {/* Status & Dynamic Done/Cancel Buttons */}
                     <td className="p-4">
-                      <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide capitalize mb-2
-                        ${request.donationStatus === 'pending' && 'bg-amber-100 text-amber-800'}
-                        ${request.donationStatus === 'inprogress' && 'bg-blue-100 text-blue-800'}
-                        ${request.donationStatus === 'done' && 'bg-green-100 text-green-800'}
-                        ${request.donationStatus === 'canceled' && 'bg-rose-100 text-rose-800'}
+<span className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide capitalize mb-2
+                  ${request.donationStatus === 'pending' && 'bg-amber-100 text-amber-800'}
+                 ${request.donationStatus === 'inprogress' && 'bg-blue-100 text-blue-800'}
+                     ${request.donationStatus === 'done' && 'bg-green-100 text-green-800'}
+                   ${request.donationStatus === 'canceled' && 'bg-rose-100 text-rose-800'}
                       `}>
                         {request.donationStatus}
                       </span>
@@ -147,13 +165,13 @@ useEffect(() => {
                         <div className="flex gap-1.5 mt-1">
                           <button 
                             onClick={() => handleStatusChange(request.id, 'done')}
-                            className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white text-[11px] font-medium px-2 py-1 rounded transition-colors"
+className="flex items-center gap-1 bg-green-600 hover:bg-green-700 text-white text-[11px] font-medium px-2 py-1 rounded transition-colors"
                           >
                             <CheckCircle className="w-3 h-3" /> Done
                           </button>
                           <button 
-                            onClick={() => handleStatusChange(request.id, 'canceled')}
-                            className="flex items-center gap-1 bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-medium px-2 py-1 rounded transition-colors"
+                            onClick={() => handleStatusChange(request._id, 'canceled')}
+className="flex items-center gap-1 bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-medium px-2 py-1 rounded transition-colors"
                           >
                             <XCircle className="w-3 h-3" /> Cancel
                           </button>
@@ -163,10 +181,10 @@ useEffect(() => {
 
                     {/* Donor Information (shows only when inprogress) */}
                     <td className="p-4">
-                {request.donationStatus === 'inprogress' && request.donorInfo ? (
+                {request.donationStatus === 'inprogress' && request.donorName ? (
                         <div>
-                <p className="font-medium text-gray-800 text-xs">{request.donorInfo.name}</p>
-                          <p className="text-[11px] text-gray-500">{request.donorInfo.email}</p>
+                <p className="font-medium text-gray-800 text-xs">{request.donor.name}</p>
+                          <p className="text-[11px] text-gray-500">{request.donor.email}</p>
                         </div>
                       ) : (
                         <span className="text-gray-400 italic text-xs">N/A</span>
@@ -177,7 +195,7 @@ useEffect(() => {
                     <td className="p-4">
                       <div className="flex items-center justify-center gap-3">
                         <a 
-                          href={`/dashboard/donation-request/view/${request.id}`}
+                          href={`/dashboard/donation-request/view/${request._id}`}
                           className="text-gray-400 hover:text-blue-600 transition-colors"
                           title="View Details"
                         >
@@ -185,7 +203,7 @@ useEffect(() => {
                         </a>
                         
                         <a 
-                          href={`/dashboard/donation-request/edit/${request.id}`}
+                          href={`/dashboard/donation-request/edit/${request._id}`}
                           className="text-gray-400 hover:text-amber-600 transition-colors"
                           title="Edit Request"
                         >
@@ -193,7 +211,7 @@ useEffect(() => {
                         </a>
 
                         <button 
-                          onClick={() => openDeleteModal(request.id)}
+                          onClick={() => openDeleteModal(request._id)}
                           className="text-gray-400 hover:text-rose-600 transition-colors"
                           title="Delete Request"
                         >
@@ -207,12 +225,10 @@ useEffect(() => {
               </tbody>
             </table>
           </div>
-
-          {/* View My All Request Button -> আপনার দেওয়া সাইডবার রাউটের সাথে ম্যাচ করা হয়েছে */}
           <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
             <a 
               href="/dashboard/mydonationrequest" 
-              className="inline-block bg-white hover:bg-gray-50 text-gray-700 font-semibold text-sm px-5 py-2.5 rounded-lg border border-gray-300 shadow-sm transition-all"
+className="inline-block bg-white hover:bg-gray-50 text-gray-700 font-semibold text-sm px-5 py-2.5 rounded-lg border border-gray-300 shadow-sm transition-all"
             >
               View My All Requests
             </a>
