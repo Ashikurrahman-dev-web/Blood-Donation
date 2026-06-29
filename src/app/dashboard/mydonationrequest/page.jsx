@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
+import Link from "next/link";
 import {
   Eye,
   Edit,
@@ -15,23 +16,33 @@ export default function MyDonationRequests() {
   const user = session?.user;
 
   const [requests, setRequests] = useState([]);
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [loading, setLoading] = useState(true);
+  const [statusFilter, setStatusFilter] =
+    useState("all");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] =
+    useState(true);
+
+  const [currentPage, setCurrentPage] =
+    useState(1);
+
+  const [totalPages, setTotalPages] =
+    useState(1);
 
   const limit = 5;
 
   const fetchRequests = useCallback(async () => {
+    const { data: tokenData } = await authClient.token();
     if (!user?.email) return;
-console.log("SESSION USER:", user);
-console.log("SESSION EMAIL:", user?.email);
+
     try {
       setLoading(true);
 
       const res = await fetch(
-        `http://localhost:5000/api/my-donation-requests?email=${user.email}&status=${statusFilter}&page=${currentPage}&limit=${limit}`
+`http://localhost:5000/api/my-donation-requests?email=${user.email}&status=${statusFilter}&page=${currentPage}&limit=${limit}`,{
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`
+            }
+          }
       );
 
       const data = await res.json();
@@ -51,7 +62,7 @@ console.log("SESSION EMAIL:", user?.email);
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
-      "Are you sure you want to delete?"
+      "Are you sure you want to delete this request?"
     );
 
     if (!confirmDelete) return;
@@ -74,16 +85,22 @@ console.log("SESSION EMAIL:", user?.email);
     }
   };
 
-  const handleStatusChange = async (id, status) => {
+  const handleStatusChange = async (
+    id,
+    status
+  ) => {
     try {
       const res = await fetch(
         `http://localhost:5000/api/donation-request/status/${id}`,
         {
           method: "PATCH",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
-          body: JSON.stringify({ status }),
+          body: JSON.stringify({
+            status,
+          }),
         }
       );
 
@@ -97,26 +114,61 @@ console.log("SESSION EMAIL:", user?.email);
     }
   };
 
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "pending":
+        return "bg-yellow-100 text-yellow-700";
+
+      case "inprogress":
+        return "bg-blue-100 text-blue-700";
+
+      case "done":
+        return "bg-green-100 text-green-700";
+
+      case "canceled":
+        return "bg-red-100 text-red-700";
+
+      default:
+        return "bg-gray-100 text-gray-700";
+    }
+  };
+
   return (
-    <div className="max-w-7xl mx-auto p-5">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">
+    <div className="max-w-6xl mx-auto p-5">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+        <h1 className="text-3xl font-bold text-white">
           My Donation Requests
         </h1>
 
         <select
           value={statusFilter}
           onChange={(e) => {
-            setStatusFilter(e.target.value);
+            setStatusFilter(
+              e.target.value
+            );
             setCurrentPage(1);
           }}
-          className="border rounded-lg px-3 py-2"
+          className="border rounded-lg px-3 py-2 bg-white text-black"
         >
-          <option value="all">All</option>
-          <option value="pending">Pending</option>
-          <option value="inprogress">In Progress</option>
-          <option value="done">Done</option>
-          <option value="canceled">Canceled</option>
+          <option value="all">
+            All Requests
+          </option>
+
+          <option value="pending">
+            Pending
+          </option>
+
+          <option value="inprogress">
+            In Progress
+          </option>
+
+          <option value="done">
+            Done
+          </option>
+
+          <option value="canceled">
+            Canceled
+          </option>
         </select>
       </div>
 
@@ -127,19 +179,28 @@ console.log("SESSION EMAIL:", user?.email);
           </div>
         ) : requests.length === 0 ? (
           <div className="p-10 text-center">
-            No Request Found
+            No donation requests found
           </div>
         ) : (
           <>
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-3">Recipient</th>
-                  <th className="p-3">Location</th>
-                  <th className="p-3">Date</th>
-                  <th className="p-3">Blood</th>
-                  <th className="p-3">Status</th>
-                  <th className="p-3">Action</th>
+                  <th className="p-4 text-left">
+                    Recipient Name
+                  </th>
+
+                  <th className="p-4 text-left">
+                    Donation Date
+                  </th>
+
+                  <th className="p-4 text-left">
+                    Status
+                  </th>
+
+                  <th className="p-4 text-center">
+                    Actions
+                  </th>
                 </tr>
               </thead>
 
@@ -149,28 +210,28 @@ console.log("SESSION EMAIL:", user?.email);
                     key={request._id}
                     className="border-t"
                   >
-                    <td className="p-3">
-                      {request.recipientName}
+                    <td className="p-4">
+                      {
+                        request.recipientName
+                      }
                     </td>
 
-                    <td className="p-3">
-                      {request.recipientDistrict}
-                      <br />
-                      <span className="text-xs text-gray-500">
-                        {request.recipientUpazila}
+                    <td className="p-4">
+                      {
+                        request.donationDate
+                      }
+                    </td>
+
+                    <td className="p-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusClass(
+                          request.donationStatus
+                        )}`}
+                      >
+                        {
+                          request.donationStatus
+                        }
                       </span>
-                    </td>
-
-                    <td className="p-3">
-                      {request.donationDate}
-                    </td>
-
-                    <td className="p-3">
-                      {request.bloodGroup}
-                    </td>
-
-                    <td className="p-3">
-                      {request.donationStatus}
 
                       {request.donationStatus ===
                         "inprogress" && (
@@ -202,30 +263,43 @@ console.log("SESSION EMAIL:", user?.email);
                       )}
                     </td>
 
-                    <td className="p-3">
-                      <div className="flex gap-3">
-                        <a
+                    <td className="p-4">
+                      <div className="flex justify-center gap-3">
+                        <Link
                           href={`/dashboard/donation-request/view/${request._id}`}
                         >
-                          <Eye size={18} />
-                        </a>
-
-                        <a
-                          href={`/dashboard/donation-request/edit/${request._id}`}
-                        >
-                          <Edit size={18} />
-                        </a>
-
-                        <button
-                          onClick={() =>
-                            handleDelete(request._id)
-                          }
-                        >
-                          <Trash2
+                          <Eye
                             size={18}
-                            className="text-red-500"
+                            className="text-blue-600"
                           />
-                        </button>
+                        </Link>
+
+                        {request.donationStatus ===
+                          "pending" && (
+                          <>
+                            <Link
+                              href={`/dashboard/donation-request/edit/${request._id}`}
+                            >
+                              <Edit
+                                size={18}
+                                className="text-green-600"
+                              />
+                            </Link>
+
+                            <button
+                              onClick={() =>
+                                handleDelete(
+                                  request._id
+                                )
+                              }
+                            >
+                              <Trash2
+                                size={18}
+                                className="text-red-600"
+                              />
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -233,30 +307,45 @@ console.log("SESSION EMAIL:", user?.email);
               </tbody>
             </table>
 
+            {/* Pagination */}
             <div className="flex justify-between items-center p-4 border-t">
-              <p>
-                Page {currentPage} of {totalPages}
+              <p className="text-sm">
+                Page {currentPage} of{" "}
+                {totalPages}
               </p>
 
               <div className="flex gap-2">
                 <button
-                  disabled={currentPage === 1}
-                  onClick={() =>
-                    setCurrentPage((prev) => prev - 1)
+                  disabled={
+                    currentPage === 1
                   }
-                  className="border p-2 rounded"
+                  onClick={() =>
+                    setCurrentPage(
+                      (prev) => prev - 1
+                    )
+                  }
+                  className="border p-2 rounded disabled:opacity-50"
                 >
-                  <ChevronLeft size={18} />
+                  <ChevronLeft
+                    size={18}
+                  />
                 </button>
 
                 <button
-                  disabled={currentPage === totalPages}
-                  onClick={() =>
-                    setCurrentPage((prev) => prev + 1)
+                  disabled={
+                    currentPage ===
+                    totalPages
                   }
-                  className="border p-2 rounded"
+                  onClick={() =>
+                    setCurrentPage(
+                      (prev) => prev + 1
+                    )
+                  }
+                  className="border p-2 rounded disabled:opacity-50"
                 >
-                  <ChevronRight size={18} />
+                  <ChevronRight
+                    size={18}
+                  />
                 </button>
               </div>
             </div>

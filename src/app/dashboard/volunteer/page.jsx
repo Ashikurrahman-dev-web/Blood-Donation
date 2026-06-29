@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import {
   Users,
   Droplets,
@@ -22,7 +22,12 @@ export default function VolunteerDashboardHome() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin-stats")
+    const { data: tokenData } =  authClient.token();
+    fetch("http://localhost:5000/api/admin-stats",{
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`
+            }
+          })
       .then((res) => res.json())
       .then((data) => {
         setStats(data);

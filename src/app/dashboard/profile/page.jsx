@@ -15,7 +15,7 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState({
     name: "",
     email: "",
-    image: "",
+    image: "https://i.ibb.co/4pDNDk1/avatar.png",
     district: "",
     upazila: "",
     bloodGroup: "",
@@ -50,40 +50,36 @@ export default function ProfilePage() {
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleSave = async () => {
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/user/${profile.email}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(profile),
-        }
-      );
-
-      const data = await res.json();
-
-      if (data.success) {
-        toast.success("Profile Updated Successfully");
-        setIsEditing(false);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Update Failed");
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="text-center py-20">
-        Loading...
-      </div>
-    );
+const handleSave = async () => {
+  if (!userEmail) {
+    toast.error("User email not found");
+    return;
   }
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/user/${encodeURIComponent(
+        userEmail
+      )}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profile),
+      }
+    );
 
+    const data = await res.json();
+
+    if (data.success) {
+      toast.success("Profile Updated Successfully");
+      setIsEditing(false);
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Update Failed");
+  }
+};
   return (
     <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow">
 
@@ -111,10 +107,13 @@ export default function ProfilePage() {
 
       <div className="flex justify-center mb-8">
         <img
-          src={profile.image}
-          alt="Profile"
-          className="w-28 h-28 rounded-full border object-cover"
-        />
+  src={
+    profile.image ||
+    "https://i.ibb.co/4pDNDk1/avatar.png"
+  }
+  alt="Profile"
+  className="w-28 h-28 rounded-full border object-cover"
+/>
       </div>
 
       <div className="grid md:grid-cols-2 gap-5">

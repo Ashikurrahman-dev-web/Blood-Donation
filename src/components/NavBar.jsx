@@ -49,7 +49,7 @@ className={`text-sm font-medium transition-colors ${pathname === "/" ? "text-pin
             Home
           </Link>
           <Link
-            href="/donation-requests"
+            href="/request"
 className={`text-sm font-medium transition-colors ${pathname.startsWith("/donation-requests") ? "text-pink-500 font-semibold" : "text-slate-300 hover:text-white"}`}
           >
             Donation Requests

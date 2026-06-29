@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
 
 export default function EditDonationRequest() {
   const { id } = useParams();
@@ -27,9 +28,15 @@ export default function EditDonationRequest() {
     if (!id) return;
 
     const fetchRequest = async () => {
+      const { data: tokenData } = await authClient.token();
       try {
         const res = await fetch(
-          `http://localhost:5000/api/donation-request/${id}`
+          `http://localhost:5000/api/donation-request/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`
+            }
+          }
         );
 
         const data = await res.json();

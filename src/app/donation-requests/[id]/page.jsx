@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
@@ -15,8 +15,12 @@ export default function DonationRequestDetailsPage() {
   const user = session?.user;
   useEffect(() => {
     if (!session) return;
-
-    fetch(`http://localhost:5000/api/donation-request/${id}`)
+    const { data: tokenData } = authClient.token();
+    fetch(`http://localhost:5000/api/donation-request/${id}`,{
+          headers: {
+            authorization: `Bearer ${tokenData?.token}`
+          }
+        })
       .then((res) => res.json())
       .then((data) => {
         setRequest(data);
@@ -28,6 +32,7 @@ export default function DonationRequestDetailsPage() {
       });
   }, [id, session]);
   const handleDonate = async () => {
+    const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
         `http://localhost:5000/api/donation-request/donate/${id}`,
@@ -35,6 +40,7 @@ export default function DonationRequestDetailsPage() {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`,
           },
           body: JSON.stringify({
             donorName: user?.name,

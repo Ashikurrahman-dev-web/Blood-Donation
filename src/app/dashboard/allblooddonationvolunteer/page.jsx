@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { Eye } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export default function AllBloodDonationVolunteer() {
   const [requests, setRequests] = useState([]);
@@ -15,9 +16,15 @@ export default function AllBloodDonationVolunteer() {
   }, [status]);
 
   const fetchRequests = async () => {
+    const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/all-blood-donation-requests?status=${status}`
+        `http://localhost:5000/api/all-blood-donation-requests?status=${status}`,
+        {
+          headers: {
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+        }
       );
 
       const data = await res.json();

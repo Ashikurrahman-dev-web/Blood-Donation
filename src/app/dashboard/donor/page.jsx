@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Edit, Trash2, Eye, CheckCircle, XCircle } from 'lucide-react';
 import { useSession } from '@/lib/auth-client';
+import Link from 'next/link';
 
 const DonorDashboardHome = () => {
   // আপনার auth-client থেকে ইউজারের সেশন ডেটা নেওয়া হচ্ছে
@@ -11,10 +12,15 @@ const DonorDashboardHome = () => {
   const [requests, setRequests] = useState([]);
 
 useEffect(() => {
+    const { data: tokenData } =  authClient.token();
   if (!user?.email) return;
 
   fetch(
-    `http://localhost:5000/api/recent-donation-requests/${user.email}`
+    `http://localhost:5000/api/recent-donation-requests/${user.email}`,{
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`
+            }
+          }
   )
     .then((res) => res.json())
     .then((data) => setRequests(data));
@@ -261,7 +267,9 @@ className="inline-block bg-white hover:bg-gray-50 text-gray-700 font-semibold te
           </div>
         </div>
       )}
-
+<button>
+                  <Link className="text-white" href={'/'}>Back to Home</Link>
+                </button>
     </div>
   );
 };

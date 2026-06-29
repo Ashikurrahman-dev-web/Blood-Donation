@@ -2,7 +2,7 @@
 import districtsData from "@/data/districts.json";
 import upazilasData from "@/data/upazilas.json";
 import { useEffect, useState } from "react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 export default function CreateDonationRequest() {
@@ -62,7 +62,7 @@ useEffect(() => {
       donationTime: formData.donationTime,
       requestMessage: formData.requestMessage,
     };
-
+const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
         "http://localhost:5000/api/donation-requests",
@@ -70,6 +70,7 @@ useEffect(() => {
           method: "POST",
           headers: {
             "content-type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
           },
           body: JSON.stringify(donationData),
         }

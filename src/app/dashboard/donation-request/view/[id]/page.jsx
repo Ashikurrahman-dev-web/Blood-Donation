@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 export default function DonationRequestDetails() {
   const { id } = useParams();
@@ -12,9 +13,14 @@ export default function DonationRequestDetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const { data: tokenData } =  authClient.token();
     if (!id) return;
 
-    fetch(`http://localhost:5000/api/donation-request/${id}`)
+    fetch(`http://localhost:5000/api/donation-request/${id}`,{
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`
+            }
+          })
       .then((res) => res.json())
       .then((data) => {
         setRequest(data);
