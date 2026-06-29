@@ -33,13 +33,8 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Discover Events</h3>
-          <ul className="space-y-2 text-slate-400 text-sm">
-            <li><Link href="/events?category=Music" className="hover:text-white transition-colors">Music Festivals</Link></li>
-            <li><Link href="/events?category=Tech" className="hover:text-white transition-colors">Tech Conferences</Link></li>
-            <li><Link href="/events?category=Sports" className="hover:text-white transition-colors">Sports Matches</Link></li>
-            <li><Link href="/events?category=Arts" className="hover:text-white transition-colors">Art Exhibitions</Link></li>
-          </ul>
+    <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Discover Events</h3>
+          
         </div>
 
         <div>
@@ -47,13 +42,11 @@ export default function Footer() {
           <ul className="space-y-2 text-slate-400 text-sm">
             <li><Link href="/register?role=organizer" className="hover:text-white transition-colors">Create Organization</Link></li>
             <li><Link href="/login" className="hover:text-white transition-colors">Host an Event</Link></li>
-            <li><Link href="/login" className="hover:text-white transition-colors">Premium Packages</Link></li>
-            <li><a href="#" className="hover:text-white transition-colors">Pricing & Fees</a></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Company</h3>
+          <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Organization</h3>
           <ul className="space-y-2 text-slate-400 text-sm">
             <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
             <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
@@ -64,7 +57,7 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 border-t border-white/5 mt-12 pt-8 text-center text-slate-500 text-xs">
-        <p>&copy; {new Date().getFullYear()} Ticketo Inc. All rights reserved. Developed by Antigravity AI.</p>
+        <p>&copy; {new Date().getFullYear()} Blood Donation Inc. All rights reserved. Developed by Antigravity AI.</p>
       </div>
     </footer>
   );

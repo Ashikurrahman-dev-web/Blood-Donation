@@ -1,36 +1,215 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🩸 Blood Donation Management System
 
-## Getting Started
+A full-stack Blood Donation Management System that connects blood donors with recipients, making the blood donation process faster, easier, and more organized.
 
-First, run the development server:
+## 🌐 Live Website
+
+**Live Demo:** https://blood-donation-eta-seven.vercel.app/
+
+---
+
+## 🚀 Features
+
+### 👤 Authentication
+
+* Secure user registration and login
+* Better Auth authentication
+* JWT protected API routes
+* Role-based authorization
+
+### 🩸 Donor Features
+
+* Create blood donation requests
+* View personal donation requests
+* Update donation request information
+* Delete donation requests
+* Search blood donors by:
+
+  * Blood Group
+  * District
+  * Upazila
+* View donor profile
+* Update profile information
+
+### 🛠️ Admin Features
+
+* Dashboard statistics
+* Manage all users
+* Block / Unblock users
+* Promote donor to volunteer
+* Promote user to admin
+* Manage all blood donation requests
+* Change donation request status
+
+### ❤️ Blood Donation
+
+* Create donation request
+* Accept donation requests
+* Track donation status
+* Pending
+* In Progress
+* Done
+* Canceled
+
+### 🔍 Search System
+
+* Search donors by blood group
+* Search donors by district
+* Search donors by upazila
+
+### 💳 Funding
+
+* Stripe payment integration
+* Donate funds securely
+* Funding history
+* Funding statistics
+
+---
+
+## 🛠️ Technologies Used
+
+### Frontend
+
+* Next.js 16
+* React.js
+* Tailwind CSS
+* HeroUI
+* React Hook Form
+* React Hot Toast
+* Lucide React
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* MongoDB Driver
+* Better Auth
+* JWT
+* Stripe API
+
+---
+
+## 📦 NPM Packages
+
+### Client
+
+```bash
+next
+react
+tailwindcss
+@heroui/react
+react-hot-toast
+react-hook-form
+lucide-react
+better-auth
+framer-motion
+axios
+stripe
+@stripe/react-stripe-js
+@stripe/stripe-js
+```
+
+### Server
+
+```bash
+express
+mongodb
+cors
+dotenv
+jose-cjs
+stripe
+```
+
+---
+
+## 📂 Project Structure
+
+```
+client/
+│
+├── src/
+│   ├── app/
+│   ├── components/
+│   ├── hooks/
+│   ├── lib/
+│   └── providers/
+│
+server/
+│
+├── index.js
+├── package.json
+└── .env
+```
+
+---
+
+## ⚙️ Environment Variables
+
+### Client (.env.local)
+
+```env
+NEXT_PUBLIC_API_URL=
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=
+```
+
+### Server (.env)
+
+```env
+PORT=
+MONGODB_URI=
+CLIENT_URL=
+STRIPE_SECRET_KEY=
+```
+
+---
+
+## 💻 Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/your-username/blood-donation.git
+```
+
+Go to the project directory
+
+```bash
+cd blood-donation
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run backend
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 👨‍💻 Author
 
-To learn more about Next.js, take a look at the following resources:
+**Ashikur Rahman**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+GitHub: https://github.com/Ashikurrahman-dev-web
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ❤️ Thank You
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Every drop of blood can save a life.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Thank you for supporting voluntary blood donation.
