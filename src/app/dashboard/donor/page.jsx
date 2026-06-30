@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Edit, Trash2, Eye, CheckCircle, XCircle } from 'lucide-react';
-import { useSession } from '@/lib/auth-client';
+import { authClient, useSession } from '@/lib/auth-client';
 import Link from 'next/link';
 
 const DonorDashboardHome = () => {
