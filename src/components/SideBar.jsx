@@ -45,7 +45,7 @@ const menuItems = dashboaedItems[user?.role] || [];
   return (
     <div className="flex bg-gray-100 min-h-screen mr-8">
       
-      {/* 1. Mobile Hamburger Button (শুধু মোবাইল স্ক্রিনের জন্য) */}
+      
       <div className="lg:hidden p-4 absolute top-0 left-0 z-50">
         <button 
           onClick={toggleSidebar} 
@@ -55,15 +55,12 @@ const menuItems = dashboaedItems[user?.role] || [];
         </button>
       </div>
 
-      {/* 2. Backdrop Blur for Mobile (মোবাইলে সাইডবার খুললে পেছনের অংশ অন্ধকার করার জন্য) */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity"
           onClick={toggleSidebar}
         />
       )}
-
-      {/* 3. Sidebar Component */}
       <aside className={`
         fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-white p-5 flex flex-col justify-between
         transform transition-transform duration-300 ease-in-out
@@ -72,12 +69,11 @@ const menuItems = dashboaedItems[user?.role] || [];
       `}>
         
         <div>
-          {/* Logo / Brand Name */}
+          
           <div className="flex items-center gap-3 px-2 py-4 mb-6 border-b border-slate-800">
             <Logo />
           </div>
 
-          {/* Navigation Links */}
           <nav className="space-y-1">
   {menuItems.map((item, index) => (
     <a

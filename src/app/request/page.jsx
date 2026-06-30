@@ -51,7 +51,7 @@ export default function DonationRequestsPage() {
                   {request.recipientName}
                 </h2>
 
-                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
+        <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-medium">
                   {request.bloodGroup}
                 </span>
               </div>
@@ -76,7 +76,7 @@ export default function DonationRequestsPage() {
 
               <Link
                 href={`/donation-requests/${request._id}`}
-                className="mt-5 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
+className="mt-5 inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg"
               >
                 <Eye size={18} />
                 View Details

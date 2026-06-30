@@ -33,11 +33,6 @@ export default function Footer() {
         </div>
 
         <div>
-    <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">Discover Events</h3>
-          
-        </div>
-
-        <div>
           <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">For Organizers</h3>
           <ul className="space-y-2 text-slate-400 text-sm">
             <li><Link href="/register?role=organizer" className="hover:text-white transition-colors">Create Organization</Link></li>

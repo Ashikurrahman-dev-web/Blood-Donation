@@ -116,29 +116,29 @@ await authClient.signOut();
 
     return (
         <div className="min-h-screen bg-slate-950 py-12 px-4 flex items-center justify-center">
-            <Card className="w-full max-w-xl bg-slate-900 border border-white/5 py-8 px-6 sm:px-8 shadow-2xl rounded-2xl">
-                <h1 className="text-center text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-indigo-400 mb-2">Sign Up</h1>
-                <p className="text-center text-slate-400 text-sm mb-8">Create an account to start sharing your ideas and collaborating with others.</p>
+<Card className="w-full max-w-xl bg-slate-900 border border-white/5 py-8 px-6 sm:px-8 shadow-2xl rounded-2xl">
+<h1 className="text-center text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-pink-500 mb-2">Sign Up</h1>
+<p className="text-center text-slate-400 text-sm mb-8">Create an account to start sharing your ideas and collaborating with others.</p>
 
                 <Form onSubmit={onSubmit} className="flex w-full flex-col gap-5">
                     
                     {/* Image Profile Upload */}
                     <div className="flex flex-col items-center gap-3 mb-4 w-full">
                         <div className="relative">
-                            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-pink-500 shadow-lg bg-slate-800">
+<div className="w-24 h-24 rounded-full overflow-hidden border-2 border-red-500 shadow-lg bg-slate-800">
                                 {preview ? (
-                                    <img src={preview} alt="Profile Preview" className="w-full h-full object-cover" />
+<img src={preview} alt="Profile Preview" className="w-full h-full object-cover" />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-slate-400">
+                    <div className="w-full h-full flex items-center justify-center text-slate-400">
                                         <FaUser size={32} />
                                     </div>
                                 )}
                             </div>
-                            <label htmlFor="image" className="absolute bottom-0 right-0 bg-pink-500 hover:bg-pink-600 text-white p-2 rounded-full cursor-pointer shadow-lg transition">
+<label htmlFor="image" className="absolute bottom-0 right-0 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full cursor-pointer shadow-lg transition">
                                 <FaCamera size={12} />
                             </label>
                         </div>
-                        <input id="image" name="image" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+<input id="image" name="image" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
                         <p className="text-xs text-slate-400">Upload your profile picture</p>
                     </div>
 
@@ -161,16 +161,16 @@ await authClient.signOut();
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-1.5">
                             <label className="text-slate-300 text-xs font-semibold">Select Blood Group *</label>
-                            <select required name="bloodGroup" defaultValue="" className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-3 h-10 text-sm text-white focus:outline-none focus:border-pink-500/50 transition">
-                                <option value="" disabled className="bg-slate-900 text-slate-500">Choose group</option>
+                            <select required name="bloodGroup" defaultValue="" className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-3 h-10 text-sm text-white focus:outline-none focus:border-red-500/50 transition">
+<option value="" disabled className="bg-slate-900 text-slate-500">Choose group</option>
                                 {bloodGroups.map((g) => <option key={`blood-${g}`} value={g} className="bg-slate-900 text-white">{g}</option>)}
                             </select>
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-slate-300 text-xs font-semibold">Select District *</label>
-                            <select required name="district" defaultValue="" className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-3 h-10 text-sm text-white focus:outline-none focus:border-pink-500/50 transition" onChange={(e) => setSelectedDistrict(e.target.value)}>
-                                <option value="" disabled className="bg-slate-900 text-slate-500">Choose district</option>
+    <label className="text-slate-300 text-xs font-semibold">Select District *</label>
+    <select required name="district" defaultValue="" className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-3 h-10 text-sm text-white focus:outline-none focus:border-red-500/50 transition" onChange={(e) => setSelectedDistrict(e.target.value)}>
+    <option value="" disabled className="bg-slate-900 text-slate-500">Choose district</option>
 {districts.map((d) => (
     <option key={d.id} value={d.id} className="bg-slate-900 text-white">
         {d.name}
@@ -181,8 +181,8 @@ await authClient.signOut();
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-slate-300 text-xs font-semibold">Select Upazila *</label>
-                        <select required name="upazila" defaultValue="" disabled={!selectedDistrict} className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-3 h-10 text-sm text-white focus:outline-none focus:border-pink-500/50 transition disabled:opacity-50">
+            <label className="text-slate-300 text-xs font-semibold">Select Upazila *</label>
+<select required name="upazila" defaultValue="" disabled={!selectedDistrict} className="w-full bg-slate-950/50 border border-white/10 rounded-xl px-3 h-10 text-sm text-white focus:outline-none focus:border-red-500/50 transition disabled:opacity-50">
                             <option value="" disabled className="bg-slate-900 text-slate-500">Choose upazila</option>
     {filteredUpazilas.map((u) => (
     <option key={u.id} value={u.id} className="bg-slate-900 text-white">
@@ -194,21 +194,21 @@ await authClient.signOut();
 
                     {/* Passwords */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <TextField isRequired name="password" type={isShowPassword ? "text" : "password"} className="dark">
+<TextField isRequired name="password" type={isShowPassword ? "text" : "password"} className="dark">
                             <Label className="text-slate-300 text-xs font-semibold">Password</Label>
                             <div className="relative">
                                 <Input placeholder="Enter your password" className="bg-slate-950/50" />
-                                <button type="button" onClick={() => setIsShowPassword(!isShowPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
+<button type="button" onClick={() => setIsShowPassword(!isShowPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
                                     {isShowPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
                         </TextField>
 
-                        <TextField isRequired name="confirm_password" type={isShowConfirmPassword ? "text" : "password"} className="dark">
-                            <Label className="text-slate-300 text-xs font-semibold">Confirm Password</Label>
+<TextField isRequired name="confirm_password" type={isShowConfirmPassword ? "text" : "password"} className="dark">
+                <Label className="text-slate-300 text-xs font-semibold">Confirm Password</Label>
                             <div className="relative">
-                                <Input placeholder="Re-enter your password" className="bg-slate-950/50" />
-                                <button type="button" onClick={() => setIsShowConfirmPassword(!isShowConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
+                 <Input placeholder="Re-enter your password" className="bg-slate-950/50" />
+<button type="button" onClick={() => setIsShowConfirmPassword(!isShowConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-slate-400">
                                     {isShowConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
@@ -216,7 +216,7 @@ await authClient.signOut();
                     </div>
 
                     <div className="flex gap-3 mt-4">
-                        <Button className='flex-1 bg-gradient-to-r from-pink-500 to-indigo-600 text-white font-bold h-11 rounded-xl shadow-lg' type="submit" isDisabled={loading}>
+<Button className='flex-1 bg-gradient-to-r from-red-500 to-pink-500 text-white font-bold h-11 rounded-xl shadow-lg' type="submit" isDisabled={loading}>
                             <Check /> {loading ? "Signing Up..." : "SignUp"}
                         </Button>
                     </div>
