@@ -24,7 +24,7 @@ export default function CheckoutForm() {
     e.preventDefault();
     const { data: tokenData } = await authClient.token(); 
 const response = await fetch(
-  "http://localhost:5000/api/create-payment-intent",
+  `${process.env.NEXT_PUBLIC_SERVER_URI}/create-payment-intent`,
   {
     method: "POST",
     headers: {
@@ -71,11 +71,12 @@ console.log(data.clientSecret);
       return;
     }
 
-    await fetch("/api/fundings", {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/fundings`, {
       method: "POST",
       headers: {
         "Content-Type":
           "application/json",
+        authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify({
         donorName:

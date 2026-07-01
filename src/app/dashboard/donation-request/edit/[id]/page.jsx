@@ -31,7 +31,7 @@ export default function EditDonationRequest() {
       const { data: tokenData } = await authClient.token();
       try {
         const res = await fetch(
-          `http://localhost:5000/api/donation-request/${id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,
           {
             headers: {
               authorization: `Bearer ${tokenData?.token}`
@@ -72,14 +72,15 @@ export default function EditDonationRequest() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/donation-request/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
           },
           body: JSON.stringify(formData),
         }

@@ -16,7 +16,7 @@ export default function DonationRequestDetails() {
     const { data: tokenData } =  authClient.token();
     if (!id) return;
 
-    fetch(`http://localhost:5000/api/donation-request/${id}`,{
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,{
             headers: {
               authorization: `Bearer ${tokenData?.token}`
             }

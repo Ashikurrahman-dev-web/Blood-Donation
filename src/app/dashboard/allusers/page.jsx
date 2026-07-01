@@ -16,8 +16,14 @@ export default function AllUsersPage() {
   const [statusFilter, setStatusFilter] = useState("all");
 
   const fetchUsers = async () => {
+    const { data: tokenData } = await authClient.token();
     const res = await fetch(
-      `http://localhost:5000/api/users?status=${statusFilter}`
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/users?status=${statusFilter}`,
+      {
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`
+        }
+      }
     );
 
     const data = await res.json();
@@ -29,12 +35,14 @@ export default function AllUsersPage() {
   }, [statusFilter]);
 
   const updateStatus = async (id, status) => {
+    const { data: tokenData } = await authClient.token();
     await fetch(
-      `http://localhost:5000/api/users/status/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/users/status/${id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`
         },
         body: JSON.stringify({ status }),
       }
@@ -46,7 +54,7 @@ export default function AllUsersPage() {
   const updateRole = async (id, role) => {
     const { data: tokenData } = await authClient.token();
     await fetch(
-      `http://localhost:5000/api/users/role/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/users/role/${id}`,
       {
         method: "PATCH",
         headers: {

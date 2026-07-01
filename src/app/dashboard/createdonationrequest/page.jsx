@@ -65,7 +65,7 @@ useEffect(() => {
 const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        "http://localhost:5000/api/donation-requests",
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-requests`,
         {
           method: "POST",
           headers: {

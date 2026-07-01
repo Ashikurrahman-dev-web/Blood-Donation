@@ -19,7 +19,7 @@ export default function AllBloodDonationVolunteer() {
     const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/all-blood-donation-requests?status=${status}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/all-blood-donation-requests?status=${status}`,
         {
           headers: {
             authorization: `Bearer ${tokenData?.token}`,
@@ -38,13 +38,15 @@ export default function AllBloodDonationVolunteer() {
   };
 
   const handleStatusChange = async (id, newStatus) => {
+    const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/donation-request/status/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/status/${id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
           },
           body: JSON.stringify({
             status: newStatus,

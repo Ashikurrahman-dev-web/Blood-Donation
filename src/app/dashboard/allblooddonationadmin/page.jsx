@@ -19,7 +19,7 @@ export default function AllBloodDonationAdmin() {
      const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/all-blood-donation-requests?status=${status}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/all-blood-donation-requests?status=${status}`,
         {
           headers: {
             authorization: `Bearer ${tokenData?.token}`

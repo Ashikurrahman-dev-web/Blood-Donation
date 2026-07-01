@@ -5,7 +5,6 @@ import { authClient, useSession } from '@/lib/auth-client';
 import Link from 'next/link';
 
 const DonorDashboardHome = () => {
-  // আপনার auth-client থেকে ইউজারের সেশন ডেটা নেওয়া হচ্ছে
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -16,7 +15,7 @@ useEffect(() => {
   if (!user?.email) return;
 
   fetch(
-    `http://localhost:5000/api/recent-donation-requests/${user.email}`,{
+    `${process.env.NEXT_PUBLIC_SERVER_URI}/recent-donation-requests/${user.email}`,{
             headers: {
               authorization: `Bearer ${tokenData?.token}`
             }
@@ -25,19 +24,19 @@ useEffect(() => {
     .then((res) => res.json())
     .then((data) => setRequests(data));
 }, [user]);
-  // মোডাল ও ডিলিট স্টেট
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
 
-  // ইন-প্রোগ্রেস থেকে স্ট্যাটাস পরিবর্তন (Done / Cancel)
   const handleStatusChange = async (id, newStatus) => {
+    const { data: tokenData } = await authClient.token();
   try {
     const res = await fetch(
-      `http://localhost:5000/api/donation-request/status/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/status/${id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`
         },
         body: JSON.stringify({
           status: newStatus,
@@ -61,17 +60,20 @@ useEffect(() => {
   }
 };
 
-  // ডিলিট মোডাল ওপেন
   const openDeleteModal = (id) => {
     setSelectedRequestId(id);
     setIsModalOpen(true);
   };
 const handleDelete = async () => {
+  const { data: tokenData } = await authClient.token();
   try {
     const res = await fetch(
-      `http://localhost:5000/api/donation-request/${selectedRequestId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${selectedRequestId}`,
       {
         method: "DELETE",
+        headers: {
+          authorization: `Bearer ${tokenData?.token}`
+        }
       }
     );
 
@@ -92,13 +94,11 @@ const handleDelete = async () => {
   }
 };
 
-  // রিকোয়ারমেন্ট অনুযায়ী সর্বোচ্চ ৩টি সাম্প্রতিক রিকোয়েস্ট ফিল্টার
   const recentRequests = requests.slice(0, 3);
 
   return (
     <div className="space-y-8 w-full">
       
-      {/* 1. Welcome Section (সেশন থেকে ডাইনামিক নাম শো করবে) */}
       <div className="bg-gradient-to-r from-red-500 to-red-600 rounded-2xl p-6 md:p-8 text-white shadow-lg">
 <h1 className="text-2xl md:text-4xl font-bold">Welcome Back, {user?.name || 'Donor'}! 👋</h1>
         <p className="text-red-100 mt-2 text-sm md:text-base">

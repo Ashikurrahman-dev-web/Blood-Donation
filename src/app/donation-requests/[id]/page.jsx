@@ -16,7 +16,7 @@ export default function DonationRequestDetailsPage() {
   useEffect(() => {
     if (!session) return;
     const { data: tokenData } = authClient.token();
-    fetch(`http://localhost:5000/api/donation-request/${id}`,{
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,{
           headers: {
             authorization: `Bearer ${tokenData?.token}`
           }
@@ -35,7 +35,7 @@ export default function DonationRequestDetailsPage() {
     const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/donation-request/donate/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/donate/${id}`,
         {
           method: "PATCH",
           headers: {
