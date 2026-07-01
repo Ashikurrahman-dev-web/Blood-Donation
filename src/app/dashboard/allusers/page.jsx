@@ -18,7 +18,7 @@ export default function AllUsersPage() {
   const fetchUsers = async () => {
     const { data: tokenData } = await authClient.token();
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/users?status=${statusFilter}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/users?status=${statusFilter}`,
       {
         headers: {
           authorization: `Bearer ${tokenData?.token}`
@@ -37,7 +37,7 @@ export default function AllUsersPage() {
   const updateStatus = async (id, status) => {
     const { data: tokenData } = await authClient.token();
     await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/users/status/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/users/status/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -54,7 +54,7 @@ export default function AllUsersPage() {
   const updateRole = async (id, role) => {
     const { data: tokenData } = await authClient.token();
     await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/users/role/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/users/role/${id}`,
       {
         method: "PATCH",
         headers: {

@@ -24,7 +24,7 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!userEmail) return;
 
-    fetch(`http://localhost:5000/api/user/${userEmail}`)
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/user/${userEmail}`)
       .then((res) => res.json())
       .then((data) => {
         setProfile({
@@ -57,7 +57,7 @@ const handleSave = async () => {
   }
   try {
     const res = await fetch(
-      `http://localhost:5000/api/user/${encodeURIComponent(
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/user/${encodeURIComponent(
         userEmail
       )}`,
       {

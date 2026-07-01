@@ -19,7 +19,7 @@ export default function AllBloodDonationAdmin() {
      const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/all-blood-donation-requests?status=${status}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/all-blood-donation-requests?status=${status}`,
         {
           headers: {
             authorization: `Bearer ${tokenData?.token}`
@@ -37,6 +37,7 @@ export default function AllBloodDonationAdmin() {
   };
 
   const handleDelete = async (id) => {
+    const { data: tokenData } = await authClient.token();
     const confirmDelete = confirm(
       "Are you sure you want to delete this request?"
     );
@@ -45,9 +46,12 @@ export default function AllBloodDonationAdmin() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/donation-request/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/${id}`,
         {
           method: "DELETE",
+          headers: {
+            authorization: `Bearer ${tokenData?.token}`
+          }
         }
       );
 
@@ -64,13 +68,15 @@ export default function AllBloodDonationAdmin() {
   };
 
   const handleStatusChange = async (id, status) => {
+    const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `http://localhost:5000/api/donation-request/status/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/status/${id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${tokenData?.token}`
           },
           body: JSON.stringify({ status }),
         }

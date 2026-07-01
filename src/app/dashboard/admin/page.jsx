@@ -22,7 +22,7 @@ export default function AdminDashboardHome() {
 
   useEffect(() => {
      const { data: tokenData } =  authClient.token();
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/admin-stats`,{
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/admin-stats`,{
           headers: {
             authorization: `Bearer ${tokenData?.token}`
           }

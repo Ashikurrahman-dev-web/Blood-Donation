@@ -38,7 +38,7 @@ export default function MyDonationRequests() {
       setLoading(true);
 
       const res = await fetch(
-`${process.env.NEXT_PUBLIC_SERVER_URI}/my-donation-requests?email=${user.email}&status=${statusFilter}&page=${currentPage}&limit=${limit}`,{
+`${process.env.NEXT_PUBLIC_SERVER_URI}/api/my-donation-requests?email=${user.email}&status=${statusFilter}&page=${currentPage}&limit=${limit}`,{
             headers: {
               authorization: `Bearer ${tokenData?.token}`
             }
@@ -69,7 +69,7 @@ export default function MyDonationRequests() {
 const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -95,7 +95,7 @@ const { data: tokenData } = await authClient.token();
     const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/status/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/status/${id}`,
         {
           method: "PATCH",
           headers: {

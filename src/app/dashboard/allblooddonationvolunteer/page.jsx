@@ -19,7 +19,7 @@ export default function AllBloodDonationVolunteer() {
     const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/all-blood-donation-requests?status=${status}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/all-blood-donation-requests?status=${status}`,
         {
           headers: {
             authorization: `Bearer ${tokenData?.token}`,
@@ -41,7 +41,7 @@ export default function AllBloodDonationVolunteer() {
     const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/status/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/status/${id}`,
         {
           method: "PATCH",
           headers: {

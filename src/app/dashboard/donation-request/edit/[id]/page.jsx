@@ -31,7 +31,7 @@ export default function EditDonationRequest() {
       const { data: tokenData } = await authClient.token();
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/${id}`,
           {
             headers: {
               authorization: `Bearer ${tokenData?.token}`
@@ -75,7 +75,7 @@ export default function EditDonationRequest() {
 const { data: tokenData } = await authClient.token();
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/${id}`,
         {
           method: "PATCH",
           headers: {

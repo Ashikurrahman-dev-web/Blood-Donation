@@ -15,7 +15,7 @@ useEffect(() => {
   if (!user?.email) return;
 
   fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URI}/recent-donation-requests/${user.email}`,{
+    `${process.env.NEXT_PUBLIC_SERVER_URI}/api/recent-donation-requests/${user.email}`,{
             headers: {
               authorization: `Bearer ${tokenData?.token}`
             }
@@ -31,7 +31,7 @@ useEffect(() => {
     const { data: tokenData } = await authClient.token();
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/status/${id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/status/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -68,7 +68,7 @@ const handleDelete = async () => {
   const { data: tokenData } = await authClient.token();
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/donation-request/${selectedRequestId}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/donation-request/${selectedRequestId}`,
       {
         method: "DELETE",
         headers: {

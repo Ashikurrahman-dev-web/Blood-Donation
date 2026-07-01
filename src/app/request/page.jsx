@@ -9,7 +9,7 @@ export default function DonationRequestsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/public-donation-requests`)
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/public-donation-requests`)
       .then((res) => res.json())
       .then((data) => {
         setRequests(data);

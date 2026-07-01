@@ -58,7 +58,7 @@ export default function SearchPage() {
         ?.name || "";
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URI}/search-donors?bloodGroup=${bloodGroup}&district=${districtName}&upazila=${upazilaName}`
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/search-donors?bloodGroup=${bloodGroup}&district=${districtName}&upazila=${upazilaName}`
     );
 
     const data = await res.json();

@@ -24,7 +24,7 @@ export default function CheckoutForm() {
     e.preventDefault();
     const { data: tokenData } = await authClient.token(); 
 const response = await fetch(
-  `${process.env.NEXT_PUBLIC_SERVER_URI}/create-payment-intent`,
+  `${process.env.NEXT_PUBLIC_SERVER_URI}/api/create-payment-intent`,
   {
     method: "POST",
     headers: {
